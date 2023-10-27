@@ -12,7 +12,7 @@ export default {
         light: '#B6B7B7'
       },
       fontFamily: {
-        prompt: ['prompt', 'sans-serif'],
+        prompt: ['Prompt', 'sans-serif'],
         archivo: ['Archivo Narrow', 'sans-serif'],
         julius: ['Julius Sans One', 'sans-serif'],
         josefin: ['Josefin Sans', 'sans-serif']
