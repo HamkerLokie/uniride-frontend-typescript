@@ -5,10 +5,86 @@
 @tailwind utilities;
 
 * {
-    font-family: 'Prompt', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  font-family: 'Prompt', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.home-select{
+  box-shadow: 3.4552px 3.4552px 3.4552px #FF8162, 3.4552px 3.4552px 3.4552px #FF8162, 0px 4.39365px 4.39365px rgba(0, 0, 0, 0.25);
+  margin: 3.5% 0;
+
+}
+
+
+.person{
+  margin: 3.5% 0;
+
+}
+
+.date-inputs,
+.time-inputs {
+  all: unset;
+  box-shadow: 3.4552px 3.4552px 3.4552px #FF8162, 3.4552px 3.4552px 3.4552px #FF8162, 0px 4.39365px 4.39365px rgba(0, 0, 0, 0.25);
+
+}
+
+.imgs .building {
+  width: 90%;
+
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.imgs .bike {
+  top: 10em;
+  left: 40px;
+  z-index: 4;
+}
+
+.imgs .road {
+  width: 90%;
+  top: 32em;
+  left: 0px;
+  z-index: 3;
+}
+
+.ico {
+  filter: drop-shadow(10px 10px 10px var(--black));
+
+}
+
+
+.imgs .tree {
+
+  top: 15.81em;
+  left: 25em;
+  z-index: 4;
+}
+
+.ico.animated {
+  opacity: 1;
+  transform: translateX(0%);
+  transition: all 1.2s ease-in-out .6s;
+  animation: pop-in-out 2.5s infinite;
+}
+
+@keyframes pop-in-out {
+  0% {
+    opacity: 1;
+    transform: scale(0.99);
   }
 
+  50% {
+    opacity: 1;
+    transform: scale(1.01);
+  }
 
+  100% {
+    opacity: 1;
+    transform: scale(0.99);
+  }
+}
