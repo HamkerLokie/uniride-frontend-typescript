@@ -1,10 +1,10 @@
 import React from "react"
 const Home = () => {
   return (
-    <React.Fragment>
+    <div className="w-100">
         
       
-    </React.Fragment>
+    </div>
   )
 }
 
