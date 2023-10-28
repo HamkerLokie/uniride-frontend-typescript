@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { aboutContent } from '../utils/aboutContent'
+import { aboutContent, developers, queries } from '../utils/homeContent'
 
 type locationObject = {
   _id: string
@@ -26,9 +26,34 @@ const Home = () => {
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(new Date(event.target.value))
   }
+
+  function renderSocialLinks (socialLinks: string) {
+    const socialPlatforms = [
+      { platform: 'facebook', icon: 'fa fa-facebook-f' },
+      { platform: 'instagram', icon: 'fa fa-instagram' },
+      { platform: 'twitter', icon: 'fa fa-twitter' },
+      { platform: 'dribbble', icon: 'fa fa-dribbble' }
+    ]
+
+    return socialPlatforms.map(platformData => {
+      const link = socialLinks[platformData.platform]
+
+      return (
+        <li className='list-none' key={platformData.platform}>
+          <a
+            className='relative block w-50 h-50 line-height-50 text-center bg-white text-23 text-gray-700 font-bold mx-6 transition-transform transform translate-y-200 opacity-0'
+            href={link}
+          >
+            <i className={platformData.icon}></i>
+          </a>
+        </li>
+      )
+    })
+  }
+
   return (
     <div className='w-full flex flex-col items-center'>
-      <section id='landing' className='p-pad flex mt-5 justify-center w-4/5'>
+      <section id='landing' className='p-pad flex mt-3 justify-center w-4/5'>
         <div className='flex flex-col'>
           <h2 className='font-josefin font-[800] text-4/5xl'>
             CHOOSE YOUR GO-TO-UNIVERSITY PARTNER
@@ -155,69 +180,50 @@ const Home = () => {
         </div>
       </section>
 
-      <section className='queries'>
-        <h4>QUERIES</h4>
-        <div className='qu'>
-          <div className='q-box'>
-            <p>
-              What if my commute schedule changes? Can I edit or cancel a ride
-              post?{' '}
-            </p>
-            <div>
-              Of course! UniRide understands that plans can change. You can
-              easily edit or cancel your ride post through the app, ensuring
-              flexibility and convenience.{' '}
+      <section className='queries flex flex-col items-center w-full px-10 mt-[2em]'>
+        <h4 className='w-4/5 text-center text-4/5xl border-b-2 border-maincolor border-solid mb-[.9em]'>
+          QUERIES
+        </h4>
+        <div className='qu p-pad w-[80%] grid grid-cols-2 gap-10 mb-[10%]'>
+          {queries.map(query => (
+            <div className='flex flex-col pl-[1em] gap-2 items-start border-l-4 border-solid border-golden'>
+              <p className='font-[900]'>{query.question}</p>
+              <div>{query.answer}</div>
             </div>
-          </div>
-          <div className='q-box'>
-            <p>
-              Can I choose between carpooling and biking as my preferred
-              commuting options?{' '}
-            </p>
-            <div>
-              Absolutely! UniRide offers both carpooling and biking options,
-              empowering you to select the mode of transportation that suits
-              your preferences and schedule.{' '}
+          ))}
+        </div>
+      </section>
+
+      <section className='developers'>
+        <h4>Developers</h4>
+        <div className='max-w-full flex justify-evenly my-0 mx- auto'>
+          {developers.map(dev => (
+            <div className='card-wrapper w-[400px] h-[500px] relative'>
+              <div className=' devcard absolute top-1/2 left-1/2 w-[300px] h-[400px] translate-x-[-50%] translate-y-[-50%] overflow-hidden  cursor-pointer ease-in duration-[.5s]'>
+                <div className='card-image absolute top-0 left-0 w-[92%] h-[92%] z-3 bg-black ease-in duration-[.5s]'>
+                  <img
+                    className='hover:opacity-[0.4] duration-[.5s] w-full h-full object-contain'
+                    src={dev.profileImage}
+                    alt='profile one'
+                  />
+                </div>
+
+                <ul className='social-icons absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-3 flex'>
+                  {renderSocialLinks(dev.socialLinks)}
+                </ul>
+
+                <div className='details absolute bottom-0 left-0 bg-main-color w-full h-120 z-0 p-10'>
+                  <h2 className='my-30 px-0 font-archivo text-center'>
+                    {dev.name}
+                    <br />
+                    <span className='job-title text-base font-josefin leading-10 text-white font-light'>
+                      {dev.jobTitle}
+                    </span>
+                  </h2>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className='q-box'>
-            <p>
-              Are there any safety measures in place when connecting with other
-              users for rides?{' '}
-            </p>
-            <div>
-              Safety is our top priority. UniRide provides an interactive chat
-              feature, enabling users to communicate and build trust before
-              sharing rides. Additionally, we encourage users to review and rate
-              their co-commuters.{' '}
-            </div>
-          </div>
-          <div className='q-box'>
-            <p>Can I apply filters to find rides that match my preferences? </p>
-            <div>
-              Yes, you can! UniRide offers a range of filters, allowing you to
-              search for rides based on transportation type (car or bike),
-              number of people sharing the ride, and more.{' '}
-            </div>
-          </div>
-          <div className='q-box'>
-            <p>How can I report any issues or concerns while using UniRide? </p>
-            <div>
-              If you encounter any problems or have concerns, you can mail us at{' '}
-              <span>help@uniride.live</span> and we will assist you promptly.{' '}
-            </div>
-          </div>
-          <div className='q-box'>
-            <p>
-              Does UniRide have a user dashboard to keep track of my rides and
-              activities?{' '}
-            </p>
-            <div>
-              The UniRide user dashboard provides an overview of all your posted
-              rides, rides taken, and communication history, ensuring you stay
-              organized and in control of your commuting activities.{' '}
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </div>

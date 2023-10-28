@@ -11,15 +11,28 @@
   box-sizing: border-box;
 }
 
+body::-webkit-scrollbar {
+  background-color: transparent;
+}
 
-.home-select{
+body::-webkit-scrollbar-thumb {
+  margin: 0;
+  border: 3px solid transparent;
+  border-radius: 20px;
+
+  background-clip: content-box;
+
+  background: linear-gradient(to bottom, #ff8162, #ff945d, #ffa75a, #ffba5b, #ffcd60);
+}
+
+.home-select {
   box-shadow: 3.4552px 3.4552px 3.4552px #FF8162, 3.4552px 3.4552px 3.4552px #FF8162, 0px 4.39365px 4.39365px rgba(0, 0, 0, 0.25);
   margin: 3.5% 0;
 
 }
 
 
-.person{
+.person {
   margin: 3.5% 0;
 
 }
@@ -71,6 +84,67 @@
   transition: all 1.2s ease-in-out .6s;
   animation: pop-in-out 2.5s infinite;
 }
+
+.devcard {
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.6);
+
+}
+
+.devcard:hover .card-image {
+  transform: translateY(-100px);
+  transition: all .9s;
+}
+
+.card:hover .social-icons li a {
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.social-icons li a:hover {
+  background: #000;
+  transition: 0.01s;
+}
+
+.social-icons li a:hover .fa {
+  color: red;
+}
+
+
+.social-icons li a .fa {
+  transition: 0.8s;
+}
+
+.social-icons li a:hover .fa-rotate {
+  transform: rotateY(360deg);
+  color: #fff;
+}
+
+
+.card:hover li:nth-child(1) a {
+  transition-delay: 0.1s;
+}
+
+.card:hover li:nth-child(2) a {
+  transition-delay: 0.2s;
+}
+
+.card:hover li:nth-child(3) a {
+  transition-delay: 0.3s;
+}
+
+.card:hover li:nth-child(4) a {
+  transition-delay: 0.4s;
+}
+
+
+nav {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+
+}
+
+
+
+
 
 @keyframes pop-in-out {
   0% {
