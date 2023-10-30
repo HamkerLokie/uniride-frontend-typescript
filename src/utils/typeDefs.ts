@@ -14,6 +14,19 @@ export interface PostFormData {
   location: String
 }
 
+export interface LoginFormData {
+  email: String
+  password: String
+}
+
+export interface UserRegisterData {
+  username: string
+  email: string
+  mobile: Number
+  password: string
+  repeat_password: string
+}
+
 export interface CustomToastOptions {
   success: {
     theme: {
@@ -30,7 +43,7 @@ export interface CustomToastOptions {
   }
 }
 
-
 export interface SubmitBtnProps {
-  text: string;
+  text: string
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }

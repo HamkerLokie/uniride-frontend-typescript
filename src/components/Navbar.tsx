@@ -1,15 +1,26 @@
 import { MouseEvent, useState } from 'react'
 import PostRide from '../modals/PostRide'
-
+import { DropDown, Popup, PostRideBtn } from './ui'
+import Login from './Login'
 const Navbar = () => {
   const role: string = 'user'
-  const user: string | null = 'Lokendra'
+  const user: string | null = null
 
   const [isPostOpen, setPostOpen] = useState<boolean>(false)
+  const [isLoginFormOpen, setLoginFormOpen] = useState<boolean>(false)
 
   const openPostRide = (event: MouseEvent) => {
     event.preventDefault()
     setPostOpen(!isPostOpen)
+  }
+
+  const openLogin = (event: MouseEvent) => {
+    event.preventDefault()
+    setLoginFormOpen(!isLoginFormOpen)
+  }
+
+  const handleLogout = () => {
+    alert('Logged Out')
   }
 
   return (
@@ -25,41 +36,13 @@ const Navbar = () => {
             <>
               {role === 'user' && (
                 <>
-                  <div className='btn-group w-full flex justify-between'>
-                    <button
-                      type='button'
-                      className='btn bg-danger w-full text-white dropdown-toggle'
-                      data-toggle='dropdown'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                    >
-                      {user}
-                    </button>
-
-                    <div className='dropdown-menu w-full dpm'>
-                      <a className='dropdown-item' href='/myrides'>
-                        My Rides
-                      </a>
-                      <a className='dropdown-item' href='/allchats'>
-                        My Chats
-                      </a>
-
-                      <div className='dropdown-divider'></div>
-
-                      <button
-                        // onClick={handleLogout}
-                        className='dropdown-item'
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  </div>
-                  <button
-                    className='nav-btn px-[.2em] py-[.6em] w-1/2 mx-[1%]  bg-black text-white border-none'
-                    onClick={openPostRide}
-                  >
-                    Post a Ride
-                  </button>
+                  <DropDown
+                    user={user}
+                    openPostRide={openPostRide}
+                    role={role}
+                    handleLogout={handleLogout}
+                  />
+                  <PostRideBtn onClick={openPostRide} />
                 </>
               )}
               {role === 'Z<(=XG+P9FD?MV3' && (
@@ -83,10 +66,7 @@ const Navbar = () => {
                     </a>
 
                     <div className='dropdown-divider'></div>
-                    <button
-                      // onClick={handleLogout}
-                      className='dropdown-item'
-                    >
+                    <button onClick={handleLogout} className='dropdown-item'>
                       Logout
                     </button>
                   </div>
@@ -94,21 +74,21 @@ const Navbar = () => {
               )}
             </>
           ) : (
-            <></>
+            <>
+              <button
+                className='nav-btn px-[.2em] py-[.6em] w-1/2 mx-[1%]  bg-maincolor text-white border-none'
+                onClick={e => openLogin(e)}
+              >
+                Login
+              </button>
+              <PostRideBtn onClick={openPostRide} />
+            </>
           )}
         </div>
       </nav>
 
-      {isPostOpen && (
-        <div className='pop-overlay'>
-          <div className='popup '>
-            <PostRide />
-            <button className='cls-btn '>
-              <i className=' ccm fa-solid fa-xmark'></i>
-            </button>
-          </div>
-        </div>
-      )}
+      {isPostOpen && <Popup Component={<PostRide />}  closePopup={() => setPostOpen(false)} />}
+      {isLoginFormOpen && <Popup Component={<Login />}  closePopup={() => setLoginFormOpen(false)}/>}
     </>
   )
 }
