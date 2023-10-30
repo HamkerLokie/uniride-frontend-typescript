@@ -1,20 +1,4 @@
-
-interface CustomToastOptions {
-  success: {
-    theme: {
-      primary: string
-    }
-    style: {
-      background: string
-      color: string
-    }
-    iconTheme: {
-      primary: string
-      secondary: string
-    }
-  }
-}
-
+import { CustomToastOptions } from "./typeDefs"
 const toastOptions: CustomToastOptions = {
   success: {
     theme: {

@@ -13,3 +13,24 @@ export interface PostFormData {
   vehicleType: String
   location: String
 }
+
+export interface CustomToastOptions {
+  success: {
+    theme: {
+      primary: string
+    }
+    style: {
+      background: string
+      color: string
+    }
+    iconTheme: {
+      primary: string
+      secondary: string
+    }
+  }
+}
+
+
+export interface SubmitBtnProps {
+  text: string;
+}

@@ -14,7 +14,7 @@ const PostRide = () => {
   )
 
   const [formData, setFormData] = useState<PostFormData>({
-    price:0,
+    price: 0,
     maxPerson: 1,
     vehicle: '',
     vehicleNumber: '',
@@ -86,8 +86,6 @@ const PostRide = () => {
             value={formData.price.toString()}
             // onChange={e => setprice(e.target.value)}
             placeholder='Charges'
-            
-            
           />
           <select
             name=''
@@ -131,7 +129,6 @@ const PostRide = () => {
             placeholder='Vehicle Number'
           />
           <input
-            // onClick={postRide}
             className='bg-black text-white'
             type='submit'
             value='Post Ride'
