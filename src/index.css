@@ -145,6 +145,19 @@ nav {
 
 
 
+.postride form select,
+.postride input {
+  width: 90%;
+  margin: 2%;
+  padding: .6em .9em;
+  font-family: var(--josefin);
+ 
+
+}
+
+
+
+
 
 @keyframes pop-in-out {
   0% {

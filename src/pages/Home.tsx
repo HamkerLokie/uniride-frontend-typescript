@@ -1,10 +1,6 @@
 import { useState, useRef } from 'react'
 import { aboutContent, developers, queries } from '../utils/homeContent'
-
-type locationObject = {
-  _id: string
-  locationName: string
-}
+import { locationObject } from '../utils/typeDefs'
 
 const Home = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
