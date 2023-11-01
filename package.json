@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
+    "@tanstack/react-query": "^5.4.3",
     "autoprefixer": "^10.4.16",
     "axios": "^1.5.1",
     "postcss": "^8.4.31",
