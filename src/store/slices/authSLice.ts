@@ -10,7 +10,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: null,
+  user: localStorage.getItem('user') || null,
   token: localStorage.getItem('access_token') || null,
   isLoggedIn: false,
   loading: false,
@@ -93,6 +93,8 @@ export const validate = createAsyncThunk<
     const response = await axios.get(url)
     const username = response?.data?.username
     const role = response?.data?.role
+    username && localStorage.setItem('user', username)
+
     return { username, role }
   } catch (error: any) {
     console.log('valfailed', error)
