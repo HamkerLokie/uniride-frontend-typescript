@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from '../../axios'
 interface AuthState {
-  user: null | { username: string; role: string }
+  user: string | null
   token: string | null
   isLoggedIn: boolean
   loading: boolean
@@ -43,35 +43,59 @@ const authSlice = createSlice({
         state.loading = false
         state.error = action.error.message
       })
+      .addCase(validate.pending, state => {
+        state.loading = true
+      })
+      .addCase(
+        validate.fulfilled,
+        (state, action: PayloadAction<{ username: string; role: string }>) => {
+          state.loading = false
+          state.error = undefined
+          state.user = action.payload.username
+          state.role = action.payload.role
+        }
+      )
+      .addCase(validate.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message
+      })
   }
 })
 
-export const login = createAsyncThunk<
-  string,
-  { email: string; password: string }
->('auth_slice/login', async (userdata, { rejectWithValue }) => {
-  try {
-    const email = userdata?.email
-    const password = userdata?.password
-    const response = await axios.post('/login', { email, password })
-    const token = response?.data?.access_token
-    localStorage.setItem('access_token', token)
-    return token
-  } catch (error: any) {
-    return rejectWithValue(error.message)
+export const login = createAsyncThunk(
+  'auth_slice/login',
+  async (
+    formdata: { email: String; password: String },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.post('/login', {
+        email: formdata.email,
+        password: formdata.password
+      })
+      const token = response?.data?.access_token
+      localStorage.setItem('access_token', token)
+      console.log('res', response)
+      return token
+    } catch (error: any) {
+      console.log(error)
+      return rejectWithValue(error.message)
+    }
   }
-})
+)
 
 export const validate = createAsyncThunk<
   { username: string; role: string },
   string
 >('auth_slice/validate', async (url, { rejectWithValue }) => {
   try {
-    const response = await axios.post(url)
+    console.log('url', url)
+    const response = await axios.get(url)
     const username = response?.data?.username
     const role = response?.data?.role
     return { username, role }
   } catch (error: any) {
+    console.log('valfailed', error)
     return rejectWithValue(error.message)
   }
 })

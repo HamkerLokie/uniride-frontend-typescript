@@ -45,5 +45,4 @@ export interface CustomToastOptions {
 
 export interface SubmitBtnProps {
   text: string
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }

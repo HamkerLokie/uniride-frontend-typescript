@@ -1,16 +1,19 @@
 import { useState, useRef } from 'react'
 import { aboutContent, developers, queries } from '../utils/homeContent'
 import { locationObject } from '../utils/typeDefs'
-
+import { useQuery } from '@tanstack/react-query'
+import { fetchLocations } from '../store/queryStore/locations'
+import { Loader } from '../components/ui'
 const Home = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
   const [time, setTime] = useState<string | number>()
   const selectedTime = useRef<string>()
 
-  const location: locationObject[] = [
-    { _id: '1', locationName: 'Darpan' },
-    { _id: '2', locationName: 'CU Gate 2' }
-  ]
+  const { isLoading, data: location } = useQuery<locationObject[]>({
+    queryKey: ['locations'],
+    queryFn: fetchLocations,
+    staleTime: 6000
+  })
 
   const onTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newTime = event.target.value
@@ -45,6 +48,10 @@ const Home = () => {
         </li>
       )
     })
+  }
+
+  if (isLoading) {
+    return <Loader />
   }
 
   return (

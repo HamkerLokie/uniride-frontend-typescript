@@ -1,10 +1,13 @@
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import PostRide from '../modals/PostRide'
 import { DropDown, Popup, PostRideBtn } from './ui'
 import Login from './Login'
+import { validate } from '../store/slices/authSLice'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../store/store'
 const Navbar = () => {
-  const role: string = 'user'
-  const user: string | null = null
+  const dispatch = useDispatch<AppDispatch>()
+  const { user, role } = useSelector((state: RootState) => state.auth)
 
   const [isPostOpen, setPostOpen] = useState<boolean>(false)
   const [isLoginFormOpen, setLoginFormOpen] = useState<boolean>(false)
@@ -23,6 +26,10 @@ const Navbar = () => {
     alert('Logged Out')
   }
 
+  useEffect(() => {
+    dispatch(validate('/validate'))
+  }, [])
+
   return (
     <>
       <nav className='min-h-fit bg-white flex justify-between items-center px-1 py-3 sticky top-0 z-4'>
@@ -34,7 +41,7 @@ const Navbar = () => {
         <div className='right w-[19%] flex justify-around'>
           {user ? (
             <>
-              {role === 'user' && (
+              {role === 'User' && (
                 <>
                   <DropDown
                     user={user}
@@ -46,31 +53,15 @@ const Navbar = () => {
                 </>
               )}
               {role === 'Z<(=XG+P9FD?MV3' && (
-                <div className='btn-group'>
-                  <button
-                    type='button'
-                    className='btn btn-danger dropdown-toggle'
-                    data-toggle='dropdown'
-                    aria-haspopup='true'
-                    aria-expanded='false'
-                  >
-                    {user}
-                  </button>
-                  <button className='pos nav-btn'>Post a Ride</button>
-                  <div className='dropdown-menu dpm'>
-                    <a className='dropdown-item' href='/adminpanel'>
-                      All Posted Rides
-                    </a>
-                    <a className='dropdown-item' href='/adminpanel'>
-                      All reports
-                    </a>
-
-                    <div className='dropdown-divider'></div>
-                    <button onClick={handleLogout} className='dropdown-item'>
-                      Logout
-                    </button>
-                  </div>
-                </div>
+                <>
+                  <DropDown
+                    user={user}
+                    openPostRide={openPostRide}
+                    role={role}
+                    handleLogout={handleLogout}
+                  />
+                  <PostRideBtn onClick={openPostRide} />
+                </>
               )}
             </>
           ) : (
@@ -87,8 +78,15 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {isPostOpen && <Popup Component={<PostRide />}  closePopup={() => setPostOpen(false)} />}
-      {isLoginFormOpen && <Popup Component={<Login />}  closePopup={() => setLoginFormOpen(false)}/>}
+      {isPostOpen && (
+        <Popup Component={<PostRide />} closePopup={() => setPostOpen(false)} />
+      )}
+      {isLoginFormOpen && (
+        <Popup
+          Component={<Login />}
+          closePopup={() => setLoginFormOpen(false)}
+        />
+      )}
     </>
   )
 }

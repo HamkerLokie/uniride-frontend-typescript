@@ -1,9 +1,14 @@
 import { Loader, Popup, SubmitBtn } from './ui'
 import { LoginFormData } from '../utils/typeDefs'
-import { useState, MouseEvent } from 'react'
+import { useState } from 'react'
 import Signup from './Signup'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState, AppDispatch } from '../store/store'
+import { login } from '../store/slices/authSLice'
+
 const Login = () => {
-  const loading: boolean = false
+  const dispatch = useDispatch<AppDispatch>()
+  const { loading } = useSelector((state: RootState) => state.auth)
   const [iseRegiterFormOpen, setRegisterFormOpen] = useState<boolean>(false)
 
   const [formData, setFormData] = useState<LoginFormData>({
@@ -11,10 +16,15 @@ const Login = () => {
     password: ''
   })
 
-  const handleLogin = (event: MouseEvent) => {
+  const handleLogin = async (event: any) => {
     event.preventDefault()
 
-    
+    await dispatch(
+      login({
+        email: formData.email,
+        password: formData.password
+      })
+    )
   }
 
   return (
@@ -24,7 +34,7 @@ const Login = () => {
         <p className='text-center font-josefin text-white text-[1.5rem] font-[700] leading-8'>
           LOGIN
         </p>
-        <form className='form flex flex-col mt-2'>
+        <form onSubmit={handleLogin} className='form flex flex-col mt-2'>
           <div className='input-group'>
             <label htmlFor='username'>E-mail</label>
             <input
@@ -55,7 +65,7 @@ const Login = () => {
               </a>
             </div>
           </div>
-          <SubmitBtn text='Log In' onClick={handleLogin} />
+          <SubmitBtn text='Log In' />
         </form>
 
         <p className='signup text-center  mt-4'>
@@ -68,7 +78,12 @@ const Login = () => {
           </button>
         </p>
       </div>
-      {iseRegiterFormOpen && <Popup Component={<Signup />} closePopup={() => setRegisterFormOpen(false)} />}
+      {iseRegiterFormOpen && (
+        <Popup
+          Component={<Signup />}
+          closePopup={() => setRegisterFormOpen(false)}
+        />
+      )}
     </>
   )
 }

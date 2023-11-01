@@ -1,4 +1,4 @@
-import React, {MouseEvent} from 'react'
+import React, { MouseEvent } from 'react'
 
 interface DropdownProps {
   user: string
@@ -25,13 +25,23 @@ const DropDown: React.FC<DropdownProps> = ({
         {user}
       </button>
       <div className='dropdown-menu w-full dpm'>
-        {role === 'user' && (
+        {role === 'User' && (
           <>
             <a className='dropdown-item' href='/myrides'>
               My Rides
             </a>
             <a className='dropdown-item' href='/allchats'>
               My Chats
+            </a>
+          </>
+        )}
+        {role === 'Z<(=XG+P9FD?MV3' && (
+          <>
+            <a className='dropdown-item' href='/adminpanel'>
+              All Posted Rides
+            </a>
+            <a className='dropdown-item' href='/adminpanel'>
+              All reports
             </a>
           </>
         )}
