@@ -44,5 +44,6 @@ export interface CustomToastOptions {
 }
 
 export interface SubmitBtnProps {
-  text: string
+  text: string,
+  classes?:string
 }

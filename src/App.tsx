@@ -8,6 +8,7 @@ import toastOptions from './utils/toastOptions'
 import Navbar from './components/Navbar'
 
 const Home = lazy(() => import('./pages/Home'))
+const Rides = lazy(() => import('./pages/Rides'))
 
 function App () {
   return (
@@ -22,6 +23,16 @@ function App () {
             <ErrorBoundary FallbackComponent={ErrorFallback}>
               <Suspense>
                 <Home />
+              </Suspense>
+            </ErrorBoundary>
+          }
+        ></Route>
+        <Route
+          path='/rides'
+          element={
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+              <Suspense>
+                <Rides />
               </Suspense>
             </ErrorBoundary>
           }

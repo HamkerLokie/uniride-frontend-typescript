@@ -32,7 +32,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className='min-h-fit bg-white flex justify-between items-center px-1 py-3 sticky top-0 z-4'>
+      <nav className='min-h-fit bg-white flex justify-between items-center px-1 py-3 sticky top-0 z-10'>
         <div className='left'>
           <a href='/' className='w-[60%]'>
             <img className='w-[60%]' src='/icons/logo.png' alt='' />

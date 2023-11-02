@@ -1,30 +1,30 @@
-import { useState, useRef } from 'react'
+import { useEffect } from 'react'
 import { aboutContent, developers, queries } from '../utils/homeContent'
-import { locationObject } from '../utils/typeDefs'
-import { useQuery } from '@tanstack/react-query'
-import { fetchLocations } from '../store/queryStore/locations'
 import { Loader } from '../components/ui'
+import { useAppDispatch, useAppSelector } from '../hooks/sliceHooks'
+import { fetchLocation } from '../store/slices/fetchLocations'
+import toast from 'react-hot-toast'
+import { useDate, useTime } from '../hooks/DateTimeHook'
+import { useNavigate } from 'react-router-dom'
+import { Outlet, useSearchParams } from 'react-router-dom'
+
+
 const Home = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
-  const [time, setTime] = useState<string | number>()
-  const selectedTime = useRef<string>()
+  const navigate = useNavigate()
+  const { selectedDate, handleDateChange } = useDate()
+  const { time, onTimeChange } = useTime()
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const { isLoading, data: location } = useQuery<locationObject[]>({
-    queryKey: ['locations'],
-    queryFn: fetchLocations,
-    staleTime: 6000
-  })
+  const {
+    locations: location,
+    loading,
+    error
+  } = useAppSelector(state => state.locations)
 
-  const onTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newTime = event.target.value
-    const list = newTime.split(':').join('')
-    selectedTime.current = list
-    setTime(newTime)
-  }
-
-  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedDate(new Date(event.target.value))
-  }
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(fetchLocation())
+  }, [])
 
   function renderSocialLinks (socialLinks: string) {
     const socialPlatforms = [
@@ -50,8 +50,15 @@ const Home = () => {
     })
   }
 
-  if (isLoading) {
+  // const handleSearch = () => {
+  //   navigate(`/rides?from=${}/to=${}/date=${selectedDate}/time=${selectedDate}`)
+  // }
+
+  if (loading) {
     return <Loader />
+  }
+  if (error) {
+    toast.error('Some Error Occured')
   }
 
   return (
@@ -66,6 +73,7 @@ const Home = () => {
               name='from'
               id='from'
               className=' home-select outline-yellow-500  border-solid p-input w-3/5 border-maincolor'
+              value={searchParams.get('from') || ''}
             >
               <option value='' disabled selected>
                 From
@@ -83,6 +91,7 @@ const Home = () => {
               name='to'
               id='to'
               className=' home-select outline-yellow-500  border-solid p-input w-3/5 border-maincolor'
+              value={searchParams.get('to') || ''}
             >
               <option value='' disabled selected>
                 To

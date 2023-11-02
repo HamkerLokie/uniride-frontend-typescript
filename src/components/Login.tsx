@@ -2,13 +2,12 @@ import { Loader, Popup, SubmitBtn } from './ui'
 import { LoginFormData } from '../utils/typeDefs'
 import { useState } from 'react'
 import Signup from './Signup'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState, AppDispatch } from '../store/store'
 import { login } from '../store/slices/authSLice'
+import { useAppDispatch, useAppSelector } from '../hooks/sliceHooks'
 
 const Login = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const { loading } = useSelector((state: RootState) => state.auth)
+  const dispatch = useAppDispatch()
+  const { loading } = useAppSelector((state) => state.auth)
   const [iseRegiterFormOpen, setRegisterFormOpen] = useState<boolean>(false)
 
   const [formData, setFormData] = useState<LoginFormData>({
