@@ -1,11 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import authSLice from './slices/authSLice'
 import fetchSlice from './slices/fetchLocations'
-
+import rideSlice from './slices/ridesSlice'
 export const store = configureStore({
   reducer: {
     auth: authSLice,
-    locations: fetchSlice
+    locations: fetchSlice,
+    rides: rideSlice
   }
 })
 

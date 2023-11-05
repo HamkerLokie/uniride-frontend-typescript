@@ -4,8 +4,8 @@ const SubmitBtn: React.FC<SubmitBtnProps> = ({ text, classes }) => {
   return (
     <>
       <button
-        className={`block w-full  p-[.75em] text-center text-black border-none rounded-br font-[600]'
-        type='submit ${classes} ${classes? 'bg-black' : 'bg-maincolor'}`}
+        className={`block w-1/5  p-[.75em] text-center text-black border-none rounded-br shadow-lg font-[600] ${classes} ${classes? 'bg-black' : 'bg-maincolor'}`}
+         type='submit'
       >
         {text}
       </button>

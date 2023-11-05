@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 
 export function useTime() {
-  const [time, setTime] = useState<string | number>();
+  const [time, setTime] = useState<string>();
   const selectedTime = useRef<string>();
 
   const onTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +18,7 @@ export function useTime() {
 }
 
 export function useDate() {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null >(new Date());
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(new Date(event.target.value));

@@ -16,7 +16,8 @@ const initialState: LocationState = {
 export const fetchLocationSlice = createSlice({
   name: 'fetch_location',
   initialState,
-  reducers: {},
+  reducers: {
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchLocation.pending, state => {
@@ -42,7 +43,7 @@ export const fetchLocation = createAsyncThunk(
     try {
       const response = await axios.get('/get-location')
       const locations = response.data?.locations || []
-      
+      localStorage.setItem('locations', JSON.stringify(locations))
       return locations
     } catch (error) {
       console.log(error)

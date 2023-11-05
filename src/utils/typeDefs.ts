@@ -4,14 +4,16 @@ export type locationObject = {
 }
 
 export interface PostFormData {
-  price: Number
-  maxPerson: Number
+  price: Number | string
+  maxPerson: Number | string
   vehicle: String
   vehicleNumber: String
   date: Date
-  time: String
+  time?: string
   vehicleType: String
   location: String
+  from:string,
+  to:string
 }
 
 export interface LoginFormData {
@@ -44,6 +46,27 @@ export interface CustomToastOptions {
 }
 
 export interface SubmitBtnProps {
-  text: string,
-  classes?:string
+  text: string
+  classes?: string
+}
+
+export interface RideProps {
+  ride: {
+    driver: {
+      username: string
+      mobile: number
+    }
+    from: string
+    to: string
+    date: Date
+    time?: string
+    price: string
+    vehicleType: string
+    vehicle: string
+    vehicleNumber: string
+    maxPerson: number
+    isFinalised: boolean
+    createAt?: Date
+    updatedAt?: Date
+  }
 }

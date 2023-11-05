@@ -1,11 +1,22 @@
 import { useState } from 'react'
-import { PostFormData, locationObject } from '../utils/typeDefs'
+import { PostFormData } from '../utils/typeDefs'
+import { useAppSelector, useDate, useTime, useAppDispatch } from '../hooks'
+import { Loader, SubmitBtn } from '../components/ui'
+import toast from 'react-hot-toast'
+
+import { postRides } from '../store/slices/ridesSlice'
 
 const PostRide = () => {
-  const location: locationObject[] = [
-    { _id: '1', locationName: 'Darpan' },
-    { _id: '2', locationName: 'CU Gate 2' }
-  ]
+  const {
+    locations: location,
+    loading,
+    error
+  } = useAppSelector(state => state.locations)
+  const dispatch = useAppDispatch()
+
+  const { selectedDate, handleDateChange } = useDate()
+  const { time, onTimeChange } = useTime()
+  const initialDate = selectedDate || new Date()
 
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
@@ -14,57 +25,76 @@ const PostRide = () => {
   )
 
   const [formData, setFormData] = useState<PostFormData>({
-    price: 0,
-    maxPerson: 1,
+    price: '',
+    maxPerson: '',
     vehicle: '',
     vehicleNumber: '',
-    date: new Date(),
-    time: '',
+    date: initialDate,
+    time: time,
     vehicleType: 'Bike',
-    location: location[0].locationName
+    location: location[0].locationName,
+    from: '',
+    to: ''
   })
 
-  const loading = false
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    const res = await dispatch(postRides(formData))
+
+    res.payload ? toast.success(res?.payload) : toast.error('Could Not Post')
+  }
+
+  if (error) {
+    toast.error('Some Error Occured')
+  }
+
   return (
     <>
       <div className='postride w-full flex flex-col items-center justify-center bg-maincolor z-10 min-h-full px-[1em] py-[2em]'>
         <h1 className='text-[1.3em] font-[700] font-josefins pb-[0.8em]'>
           Post Ride
         </h1>
-        {loading && <div>Loadingg...</div>}
+        {loading && <Loader />}
         <form
           action=''
           className='w-full grid grid-cols-2 place-items-center p-pad'
+          onSubmit={e => handleSubmit(e)}
         >
           <select
             name='from'
             id='from'
+            value={formData.from}
             className='w-full flex flex-wrap justify-center'
+            onChange={e => setFormData({ ...formData, from: e.target.value })}
           >
             <option value='' disabled>
               From
             </option>
-            {location &&
-              location.map(l => {
-                return (
-                  <option key={l._id} value={l.locationName}>
-                    {l.locationName}
-                  </option>
-                )
-              })}
+            {location?.map(l => {
+              return (
+                <option key={l._id} value={l.locationName}>
+                  {l.locationName}
+                </option>
+              )
+            })}
           </select>
 
-          <select name='to' id='to'>
+          <select
+            name='to'
+            id='to'
+            value={formData.to}
+            onChange={e => setFormData({ ...formData, to: e.target.value })}
+          >
             <option value='' disabled>
               To
             </option>
 
-            {location &&
-              location.map(l => (
-                <option key={l._id} value={l.locationName}>
-                  {l.locationName}
-                </option>
-              ))}
+            {location?.map(l => (
+              <option key={l._id} value={l.locationName}>
+                {l.locationName}
+              </option>
+            ))}
           </select>
 
           <input
@@ -72,19 +102,21 @@ const PostRide = () => {
             min={tomorrow.toISOString().split('T')[0]}
             type='date'
             id='date-inputs'
-            // onChange={handleDateChange}
+            onChange={handleDateChange}
           />
 
           <input
             type='time'
             placeholder='Time'
-            value={formData.time.toString()}
-            // onChange={t => onTimeChange(t.target.value)}
+            value={formData.time}
+            onChange={e => onTimeChange(e)}
           />
           <input
             type='number'
             value={formData.price.toString()}
-            // onChange={e => setprice(e.target.value)}
+            onChange={e =>
+              setFormData({ ...formData, price: Number(e.target.value) })
+            }
             placeholder='Charges'
           />
           <select
@@ -106,7 +138,7 @@ const PostRide = () => {
             onChange={e =>
               setFormData({
                 ...formData,
-                maxPerson: parseInt(e.target.value, 10)
+                maxPerson: Number(e.target.value)
               })
             }
             value={formData.maxPerson.toString()}
@@ -128,11 +160,7 @@ const PostRide = () => {
             value={formData.vehicleNumber.toString()}
             placeholder='Vehicle Number'
           />
-          <input
-            className='bg-black text-white'
-            type='submit'
-            value='Post Ride'
-          />
+          <SubmitBtn text='Post Ride' classes='w-full text-white' />
         </form>
       </div>
     </>

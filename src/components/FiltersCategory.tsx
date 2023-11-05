@@ -1,8 +1,6 @@
 import React from 'react'
-
-interface FilterButtonsProps {
-  handleFilter: (filter: string) => void
-}
+import { useAppDispatch } from '../hooks'
+import { filterRides } from '../store/slices/ridesSlice'
 
 const filterData = [
   { label: 'All', filter: '/all' },
@@ -13,11 +11,16 @@ const filterData = [
   { label: 'Not Finalised', filter: '/notfinalised' }
 ]
 
-const FiltersCategory: React.FC<FilterButtonsProps> = ({ handleFilter }) => {
+const FiltersCategory: React.FC= () => {
+  const dispatch = useAppDispatch()
   return (
-    <div className='w-full border-solid border-2 grid grid-cols-3 place-items-center gap-x-2 min-h-[13vh] p-input rounded-br'>
+    <div className='w-full border-solid border-2 grid grid-cols-6 place-items-center min-h-[10vh]  rounded-br shadow-xl'>
       {filterData.map((item, index) => (
-        <button className='w-3/5 my-1 p-pad font-archivo text-[1.2em] border-solid border-2 hover:bg-crimson hover:text-white' key={index} onClick={() => handleFilter(item.filter)}>
+        <button
+          className='w-11/12 my-1 p-pad font-archivo  border-solid text-sm border-2 hover:bg-crimson hover:text-white '
+          key={index}
+          onClick={() => dispatch(filterRides(`${item.label}`))}
+        >
           {item.label}
         </button>
       ))}

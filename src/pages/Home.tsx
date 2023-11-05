@@ -1,18 +1,17 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { aboutContent, developers, queries } from '../utils/homeContent'
 import { Loader } from '../components/ui'
-import { useAppDispatch, useAppSelector } from '../hooks/sliceHooks'
+import { useAppDispatch, useAppSelector,useDate, useTime } from '../hooks'
 import { fetchLocation } from '../store/slices/fetchLocations'
 import toast from 'react-hot-toast'
-import { useDate, useTime } from '../hooks/DateTimeHook'
 import { useNavigate } from 'react-router-dom'
-import { Outlet, useSearchParams } from 'react-router-dom'
-
+import { useSearchParams } from 'react-router-dom'
 
 const Home = () => {
   const navigate = useNavigate()
   const { selectedDate, handleDateChange } = useDate()
   const { time, onTimeChange } = useTime()
+  // const [person, setPerson] = useState<number>()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const {
@@ -50,9 +49,21 @@ const Home = () => {
     })
   }
 
-  // const handleSearch = () => {
-  //   navigate(`/rides?from=${}/to=${}/date=${selectedDate}/time=${selectedDate}`)
-  // }
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    const fromVal = searchParams.get('from')
+    const toVal = searchParams.get('to')
+    const person = searchParams.get('person')
+
+    if ([fromVal, toVal, time, person].some(value => value == null)) {
+      toast.error(`Select All the fields`)
+      return
+    }
+
+    const queryString = `from=${fromVal}&to=${toVal}&time=${time}&person=${person}`
+
+    navigate(`/rides?${queryString}`)
+  }
 
   if (loading) {
     return <Loader />
@@ -68,12 +79,21 @@ const Home = () => {
           <h2 className='font-josefin font-[800] text-4/5xl'>
             CHOOSE YOUR GO-TO-UNIVERSITY PARTNER
           </h2>
-          <form action='' className='flex flex-col items-start'>
+          <form
+            onSubmit={handleSearch}
+            action=''
+            className='flex flex-col items-start'
+          >
             <select
               name='from'
               id='from'
               className=' home-select outline-yellow-500  border-solid p-input w-3/5 border-maincolor'
               value={searchParams.get('from') || ''}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                const newValue = e.target.value
+                searchParams.set('from', newValue)
+                setSearchParams(searchParams)
+              }}
             >
               <option value='' disabled selected>
                 From
@@ -92,6 +112,11 @@ const Home = () => {
               id='to'
               className=' home-select outline-yellow-500  border-solid p-input w-3/5 border-maincolor'
               value={searchParams.get('to') || ''}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                const newValue = e.target.value
+                searchParams.set('to', newValue)
+                setSearchParams(searchParams)
+              }}
             >
               <option value='' disabled selected>
                 To
@@ -110,7 +135,9 @@ const Home = () => {
                 type='date'
                 id='date-inputs'
                 value={selectedDate?.toISOString().split('T')[0]}
-                onChange={e => handleDateChange(e)}
+                onChange={e => {
+                  handleDateChange(e)
+                }}
                 min={new Date().toISOString().split('T')[0]}
                 className='p-input font-archivo text-center text-white bg-[#D34848] mr-5 w-60'
               />
@@ -129,6 +156,11 @@ const Home = () => {
                 name=''
                 id=''
                 className=' person w-60 p-input bg-[#D34848] outline-none border-solid text-white border-maincolor  '
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  const newValue = e.target.value
+                  searchParams.set('person', newValue)
+                  setSearchParams(searchParams)
+                }}
               >
                 <option value='' disabled selected>
                   Persons

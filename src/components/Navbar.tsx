@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../store/store'
 const Navbar = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { user, role } = useSelector((state: RootState) => state.auth)
+  const { user, role, error } = useSelector((state: RootState) => state.auth)
 
   const [isPostOpen, setPostOpen] = useState<boolean>(false)
   const [isLoginFormOpen, setLoginFormOpen] = useState<boolean>(false)

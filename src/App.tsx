@@ -28,7 +28,7 @@ function App () {
           }
         ></Route>
         <Route
-          path='/rides'
+          path={`/rides`}
           element={
             <ErrorBoundary FallbackComponent={ErrorFallback}>
               <Suspense>
