@@ -2,13 +2,14 @@ import Filters from '../components/Filters'
 import FiltersCategory from '../components/FiltersCategory'
 import ResultCard from '../components/ResultCard'
 import { Loader, SubmitBtn } from '../components/ui'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { fetchRides } from '../store/slices/ridesSlice'
 import { useAppDispatch, useAppSelector, useDate, useTime } from '../hooks'
 import toast from 'react-hot-toast'
 import { useEffect } from 'react'
 import { fetchLocation } from '../store/slices/fetchLocations'
-// import { sampleRides } from '../SampleData/Rides'
+import { sampleRides } from '../SampleData/Rides'
+import { changeRide } from '../store/slices/setRide'
 
 const Rides = () => {
   const {
@@ -17,7 +18,7 @@ const Rides = () => {
     error
   } = useAppSelector(state => state.locations)
 
-  const { rides } = useAppSelector(state => state.rides)
+  // const { rides } = useAppSelector(state => state.rides)
 
   const { selectedDate, handleDateChange } = useDate()
   const { time, onTimeChange } = useTime()
@@ -36,13 +37,11 @@ const Rides = () => {
     dispatch(fetchRides(`/search/${from}/${to}/${selectedDate}`))
   }
 
-
   if (error) {
     toast.error('Some Error Occured.....')
   }
   return (
     <div className='w-full flex flex-col p-input items-center'>
-
       {loading && <Loader />}
 
       <div className='border-br shadow-md w-4/5 p-input bg-light'>
@@ -123,13 +122,19 @@ const Rides = () => {
         <div className='w-4/5 p-pad'>
           <FiltersCategory />
           <div className='p-pad w-full mt-2 overscroll-y-scroll flex flex-col gap-6'>
-            {rides.map(ride => (
-              <ResultCard ride={ride} />
+            {sampleRides.map((ride, index) => (
+              <Link
+                key={index}
+                to={`/ride/details/${ride.vehicleNumber}/${ride.from}/${ride.to}`}
+                style={{ all: 'unset' }}
+                onClick={() => dispatch(changeRide(ride))}
+              >
+                <ResultCard ride={ride} />
+              </Link>
             ))}
           </div>
         </div>
       </div>
-
     </div>
   )
 }

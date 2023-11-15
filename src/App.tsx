@@ -9,35 +9,46 @@ import Navbar from './components/Navbar'
 
 const Home = lazy(() => import('./pages/Home'))
 const Rides = lazy(() => import('./pages/Rides'))
+const InsideRide = lazy(() => import('./pages/InsideRide'))
 
 function App () {
   return (
     <React.Fragment>
       <Toaster position='top-center' toastOptions={toastOptions}></Toaster>
-      <Navbar/>
+      <Navbar />
       <main>
-      <Routes>
-        <Route
-          path=''
-          element={
-            <ErrorBoundary FallbackComponent={ErrorFallback}>
-              <Suspense>
-                <Home />
-              </Suspense>
-            </ErrorBoundary>
-          }
-        ></Route>
-        <Route
-          path={`/rides`}
-          element={
-            <ErrorBoundary FallbackComponent={ErrorFallback}>
-              <Suspense>
-                <Rides />
-              </Suspense>
-            </ErrorBoundary>
-          }
-        ></Route>
-      </Routes>
+        <Routes>
+          <Route
+            path=''
+            element={
+              <ErrorBoundary FallbackComponent={ErrorFallback}>
+                <Suspense>
+                  <Home />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          ></Route>
+          <Route
+            path={`/rides`}
+            element={
+              <ErrorBoundary FallbackComponent={ErrorFallback}>
+                <Suspense>
+                  <Rides />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          ></Route>
+          <Route
+            path={`/ride/details/:rideid/:from/:to`}
+            element={
+              <ErrorBoundary FallbackComponent={ErrorFallback}>
+                <Suspense>
+                  <InsideRide />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          ></Route>
+        </Routes>
       </main>
     </React.Fragment>
   )
