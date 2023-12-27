@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector, useDate, useTime } from '../hooks'
 import toast from 'react-hot-toast'
 import { useEffect } from 'react'
 import { fetchLocation } from '../store/slices/fetchLocations'
-import { sampleRides } from '../SampleData/Rides'
 import { changeRide } from '../store/slices/setRide'
 
 const Rides = () => {
@@ -18,8 +17,7 @@ const Rides = () => {
     error
   } = useAppSelector(state => state.locations)
 
-  // const { rides } = useAppSelector(state => state.rides)
-
+  const { rides } = useAppSelector(state => state.rides)
   const { selectedDate, handleDateChange } = useDate()
   const { time, onTimeChange } = useTime()
 
@@ -122,7 +120,7 @@ const Rides = () => {
         <div className='w-4/5 p-pad'>
           <FiltersCategory />
           <div className='p-pad w-full mt-2 overscroll-y-scroll flex flex-col gap-6'>
-            {sampleRides.map((ride, index) => (
+            {rides.map((ride, index) => (
               <Link
                 key={index}
                 to={`/ride/details/${ride.vehicleNumber}/${ride.from}/${ride.to}`}

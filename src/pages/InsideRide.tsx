@@ -3,6 +3,7 @@ import { Loader } from '../components/ui'
 import ResultCard from '../components/ResultCard'
 import { useAppSelector } from '../hooks'
 import { RideProps } from '../utils/typeDefs'
+import ChatBox from '../components/ChatBox'
 
 const InsideRide = () => {
   //   const loading: boolean = false
@@ -12,7 +13,7 @@ const InsideRide = () => {
     <React.Fragment>
       {loading && <Loader />}
 
-      <div className='w-full p-pad flex'>
+      <div className='inside w-full p-input flex justify-between'>
         <div className='w-3/5 p-input flex flex-col max-h-[90vh] overflow-x-scroll'>
           <div className='details demb'>
             <ResultCard ride={currentRide as RideProps['ride']} />
@@ -69,7 +70,7 @@ const InsideRide = () => {
                 <span className='flex capitalize font-julius font-[700] text-crimson '>
                   {'Bike'}
                 </span>
-              </p>
+              </p>  
               <p>
                 Profession:{' '}
                 <span className='flex capitalize font-julius font-[700] text-crimson '>
@@ -79,7 +80,10 @@ const InsideRide = () => {
             </div>
           </div>
         </div>
-        <div className=' w-[30%] p-pad max-h-[88vh] '></div>
+        {/* right */}
+        <div className=' w-[30%] p-pad max-h-[88vh]'>
+          <ChatBox/>
+        </div>
       </div>
     </React.Fragment>
   )

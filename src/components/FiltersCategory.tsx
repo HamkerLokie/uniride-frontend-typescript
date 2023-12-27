@@ -11,7 +11,7 @@ const filterData = [
   { label: 'Not Finalised', filter: '/notfinalised' }
 ]
 
-const FiltersCategory: React.FC= () => {
+const FiltersCategory: React.FC = () => {
   const dispatch = useAppDispatch()
   return (
     <div className='w-full border-solid border-2 grid grid-cols-6 place-items-center min-h-[10vh]  rounded-br shadow-xl'>

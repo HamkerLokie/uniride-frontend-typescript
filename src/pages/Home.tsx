@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { aboutContent, developers, queries } from '../utils/homeContent'
 import { Loader } from '../components/ui'
-import { useAppDispatch, useAppSelector,useDate, useTime } from '../hooks'
+import { useAppDispatch, useAppSelector, useDate, useTime } from '../hooks'
 import { fetchLocation } from '../store/slices/fetchLocations'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
@@ -11,7 +11,6 @@ const Home = () => {
   const navigate = useNavigate()
   const { selectedDate, handleDateChange } = useDate()
   const { time, onTimeChange } = useTime()
-  // const [person, setPerson] = useState<number>()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const {

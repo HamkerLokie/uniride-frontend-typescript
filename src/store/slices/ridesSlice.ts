@@ -83,7 +83,6 @@ export const fetchRides = createAsyncThunk(
   'rides/search',
   async (url: string, { rejectWithValue }) => {
     try {
-      console.log(url)
       const response = await axios.get(url)
       const result = response.data || []
       return result

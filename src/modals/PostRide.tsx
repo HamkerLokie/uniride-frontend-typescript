@@ -43,6 +43,19 @@ const PostRide = () => {
     const res = await dispatch(postRides(formData))
 
     res.payload ? toast.success(res?.payload) : toast.error('Could Not Post')
+
+    setFormData({
+      price: '',
+      maxPerson: '',
+      vehicle: '',
+      vehicleNumber: '',
+      date: initialDate,
+      time: time,
+      vehicleType: 'Bike',
+      location: location[0].locationName,
+      from: '',
+      to: ''
+    })
   }
 
   if (error) {

@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/sliceHooks'
 
 const Login = () => {
   const dispatch = useAppDispatch()
-  const { loading } = useAppSelector((state) => state.auth)
+  const { loading } = useAppSelector(state => state.auth)
   const [iseRegiterFormOpen, setRegisterFormOpen] = useState<boolean>(false)
 
   const [formData, setFormData] = useState<LoginFormData>({
